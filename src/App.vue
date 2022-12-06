@@ -1,9 +1,20 @@
 <script>
-export default {};
+import Layout from "./components/Layout.vue";
+import Modal from "./components/Modal.vue";
+
+export default {
+  components: {
+    Layout,
+    Modal,
+  },
+};
 </script>
 
 <template>
-  <router-view />
+  <Layout>
+    <router-view></router-view>
+    <Modal />
+  </Layout>
 </template>
 
 <style></style>

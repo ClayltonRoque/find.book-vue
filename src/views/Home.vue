@@ -18,26 +18,10 @@ export default {
 </script>
 <template>
   <div>
-    <header>
-      <div class="Router">
-        <h1>Book Finder</h1>
-        <button class="buttonRouter">
-          <router-link to="/Favorites">Favorites</router-link>
-        </button>
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Digite um nome de um livro ou autor"
-          v-model="query"
-        />
-        <button @click="this.$store.dispatch('getBooks', query)">
-          pesquisar
-        </button>
-      </div>
-    </header>
     <div class="Row"></div>
-    <Card />
+    <div class="cardsContainer" v-for="(book, index) in booksData" :key="index">
+      <Card :bookData="book" />
+    </div>
     <NoCard v-if="!booksData.length" />
   </div>
 </template>
@@ -82,6 +66,12 @@ header {
     border-radius: 5px;
     text-align: center;
   }
+}
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .Row {

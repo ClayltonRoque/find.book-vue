@@ -44,7 +44,7 @@ export default {
           ></button>
         </div>
         <div class="modal-body">
-          <h5 class="modal-title" id="exampleModalLabel">{{ books }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ this.book }}</h5>
           <p></p>
         </div>
         <div class="modal-footer">

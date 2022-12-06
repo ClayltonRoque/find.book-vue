@@ -29,3 +29,6 @@ export default createStore({
   },
   modules: {},
 });
+
+// books;
+// activeBook: 1;
