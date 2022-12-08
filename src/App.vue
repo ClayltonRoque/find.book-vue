@@ -1,4 +1,5 @@
 <script>
+import { mapState } from "vuex";
 import Layout from "./components/Layout.vue";
 import Modal from "./components/Modal.vue";
 
@@ -7,13 +8,14 @@ export default {
     Layout,
     Modal,
   },
+  computed: mapState(["modalActive"]),
 };
 </script>
 
 <template>
   <Layout>
     <router-view></router-view>
-    <Modal />
+    <Modal v-if="modalActive" />
   </Layout>
 </template>
 

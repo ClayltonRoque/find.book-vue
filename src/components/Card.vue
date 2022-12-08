@@ -6,13 +6,18 @@ export default {
   data() {
     return {};
   },
-  computed: mapState(["booksData"]),
+  computed: mapState(["modalActive", "modalData"]),
   props: ["book"],
   methods: {
     sliceTitle(book) {
-      book.volumeInfo.title.length >= 40;
-      return (book.volumeInfo.title =
-        book.volumeInfo.title.slice(0, 40) + "...");
+      if (book.volumeInfo.title.length >= 50) {
+        return (book.volumeInfo.title =
+          book.volumeInfo.title.slice(0, 40) + "...");
+      }
+    },
+    setModalBookData(book) {
+      console.log(book);
+      this.$store.dispatch("setModalBookData", book);
     },
   },
 };
@@ -22,17 +27,30 @@ export default {
   <div class="card" style="width: 18rem">
     <img :src="this.book.volumeInfo.imageLinks.smallThumbnail" alt="..." />
     <div class="cardBody">
-      <h1 v-if="sliceTitle(this.book)" v-html="this.book.volumeInfo.title"></h1>
+      <h1
+        v-if="!sliceTitle(this.book)"
+        v-html="this.book.volumeInfo.title"
+      ></h1>
       <h2
         class="card-text"
         v-html="'Creator(s): ' + this.book.volumeInfo.authors"
       ></h2>
     </div>
-    <div class="cardFooter"></div>
+    <div class="cardFooter">
+      <button
+        type="button"
+        class="buttonOpenModal"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        @click="setModalBookData(this.book)"
+      >
+        Detalhes
+      </button>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .card {
   margin-left: 30px;
   color: black;
@@ -73,6 +91,16 @@ export default {
     align-items: flex-end;
     justify-content: flex-end;
     margin-right: 7px;
+  }
+
+  .buttonOpenModal {
+    height: 30px;
+    width: 80px;
+    background-color: #6b95ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: -80px;
   }
 }
 </style>

@@ -1,29 +1,26 @@
 <script>
 import { mapState } from "vuex";
-
 export default {
   name: "Modal",
   data() {
-    console.log(this.book);
-    return {
-      books: this.book,
-    };
+    return {};
   },
-
-  computed: mapState(["booksData"]),
-  props: ["book"],
+  computed: mapState(["modalData", "localStorageFavorites"]),
+  methods: {
+    addToFavorites(modalData) {
+      this.$store.dispatch("setLocalStorageFavoritesData", modalData);
+    },
+    isInStorage(modalData) {
+      return this.localStorageFavorites.find((item) => item.id == modalData.id);
+    },
+    removeToFavorites(modalData) {
+      this.$store.dispatch("removeLocalStorageFavoritesData", modalData);
+    },
+  },
 };
 </script>
 
 <template>
-  <button
-    type="button"
-    class="buttonOpenModal"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-  >
-    Detalhes
-  </button>
   <div
     class="modal fade"
     id="exampleModal"
@@ -34,7 +31,7 @@ export default {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <img />
+          <img :src="this.modalData.volumeInfo.imageLinks.smallThumbnail" />
 
           <button
             type="button"
@@ -44,8 +41,12 @@ export default {
           ></button>
         </div>
         <div class="modal-body">
-          <h5 class="modal-title" id="exampleModalLabel">{{ this.book }}</h5>
-          <p></p>
+          <h5
+            class="modal-title"
+            id="exampleModalLabel"
+            v-html="this.modalData.volumeInfo.title"
+          ></h5>
+          <p v-html="this.modalData.volumeInfo.description"></p>
         </div>
         <div class="modal-footer">
           <button
@@ -55,22 +56,41 @@ export default {
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="removeToFavorites(this.modalData)"
+            v-if="isInStorage(this.modalData)"
+          >
+            Remove from Favorites
+          </button>
+          <button
+            type="button"
+            class="btn btn-success"
+            @click="addToFavorites(this.modalData)"
+            v-else
+          >
+            Add To Favorites
+          </button>
+          <a
+            class="btn btn-primary"
+            target="_blank"
+            :href="this.modalData.volumeInfo.previewLink"
+          >
+            More information
+          </a>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
-.buttonOpenModal {
-  height: 30px;
-  width: 80px;
-  background-color: #6b95ff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: -80px;
+<style scoped lang="scss">
+.modal-content {
+  img {
+    height: 450px;
+    width: 450px;
+  }
 }
 </style>
 

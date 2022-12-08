@@ -5,9 +5,13 @@
       <button class="buttonRouter">
         <router-link to="/Favorites">Favorites</router-link>
       </button>
+      <button class="buttonRouter">
+        <router-link to="/">Home</router-link>
+      </button>
     </div>
     <SearchBooks />
   </header>
+  <div class="Row"></div>
 </template>
 
 <script>

@@ -21,8 +21,6 @@ export default {
 
     const store = useStore();
 
-    console.log(store);
-
     function searchBooks() {
       store.dispatch("getBooks", state.query);
     }

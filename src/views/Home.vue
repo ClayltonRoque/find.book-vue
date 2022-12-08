@@ -17,10 +17,9 @@ export default {
 };
 </script>
 <template>
-  <div>
-    <div class="Row"></div>
-    <div class="cardsContainer" v-for="(book, index) in booksData" :key="index">
-      <Card :bookData="book" />
+  <div class="cardsContainer">
+    <div v-for="(book, index) in booksData" :key="index">
+      <Card :book="book" />
     </div>
     <NoCard v-if="!booksData.length" />
   </div>
@@ -36,7 +35,8 @@ header {
   h1 {
     font-size: 32px;
     color: #6b95ff;
-    margin-right: 90px;
+    margin-right: 10px;
+    margin-top: 10px;
   }
 
   .Router {
@@ -67,13 +67,6 @@ header {
     text-align: center;
   }
 }
-.cardsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
 .Row {
   border-top: 0.0625rem solid black;
   margin-top: 0.9375rem;

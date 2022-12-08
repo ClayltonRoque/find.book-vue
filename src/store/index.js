@@ -4,12 +4,35 @@ export default createStore({
   state: {
     search: "",
     booksData: [],
+    modalActive: false,
+    modalData: [],
     index: 0,
     favorites: [],
+    localStorageFavorites: [],
   },
   mutations: {
     getBooks(state, books) {
       state.booksData = books;
+    },
+    setModalBookData(state, book) {
+      state.modalActive = true;
+      state.modalData = book;
+    },
+    getLocalStorageFavoriteData(state, storageData) {
+      state.localStorageFavorites = storageData;
+    },
+    setLocalStorageFavoritesData(state, book) {
+      state.favorites = state.localStorageFavorites;
+      state.favorites.push(book);
+      localStorage.setItem("favoritesVue", JSON.stringify(state.favorites));
+    },
+    removeLocalStorageFavoritesData(state, book) {
+      const index = state.localStorageFavorites.indexOf(book);
+      state.localStorageFavorites.splice(index, 1);
+      localStorage.setItem(
+        "favoritesVue",
+        JSON.stringify(state.localStorageFavorites)
+      );
     },
   },
   actions: {
@@ -26,7 +49,25 @@ export default createStore({
         console.log(error);
       }
     },
+    setModalBookData({ commit }, book) {
+      commit("setModalBookData", book);
+    },
+    getLocalStorageFavoriteData({ commit }) {
+      if (localStorage.getItem("favoritesVue")) {
+        commit(
+          "getLocalStorageFavoriteData",
+          JSON.parse(localStorage.getItem("favoritesVue"))
+        );
+      }
+    },
+    setLocalStorageFavoritesData({ commit }, book) {
+      commit("setLocalStorageFavoritesData", book);
+    },
+    removeLocalStorageFavoritesData({ commit }, book) {
+      commit("removeLocalStorageFavoritesData", book);
+    },
   },
+
   modules: {},
 });
 
