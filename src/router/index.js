@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Favorites from "../views/Favorites.vue";
+import Favorites from "../views/Favorite.vue";
 import Home from "../views/Home.vue";
 
 const routes = [
