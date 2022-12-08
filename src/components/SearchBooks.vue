@@ -5,7 +5,7 @@
       placeholder="Digite um nome de um livro ou autor"
       v-model="state.query"
     />
-    <button @click="searchBooks">pesquisar</button>
+    <button @click="searchBooks(), alertNullInput()">pesquisar</button>
   </div>
 </template>
 
@@ -25,9 +25,18 @@ export default {
       store.dispatch("getBooks", state.query);
     }
 
+    function alertNullInput() {
+      if (state.query.length == 0) {
+        alert(
+          "digite algo e click no botão de pesquisar e veja a magica acontecer."
+        );
+      }
+    }
+
     return {
       state,
       searchBooks,
+      alertNullInput,
     };
   },
 };

@@ -6,9 +6,11 @@ export default createStore({
     booksData: [],
     modalActive: false,
     modalData: [],
-    index: 0,
     favorites: [],
     localStorageFavorites: [],
+    index: 0,
+    loading: false,
+    schrollRadio: null,
   },
   mutations: {
     getBooks(state, books) {
@@ -67,6 +69,7 @@ export default createStore({
       commit("removeLocalStorageFavoritesData", book);
     },
   },
+  nextPage({ commit }) {},
 
   modules: {},
 });
